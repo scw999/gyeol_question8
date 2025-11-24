@@ -366,7 +366,7 @@
         .text-gradient { background: linear-gradient(45deg, #5D7D9A, #D67D88); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
         /* 모달 스타일 */
-        #science-modal { backdrop-filter: blur(5px); }
+        #science-modal, #analysis-guide-modal { backdrop-filter: blur(5px); }
         .modal-content { max-height: 80vh; overflow-y: auto; scrollbar-width: thin; }
         .theory-box {
             border: 1px solid #e5e7eb; background-color: #f9fafb; border-radius: 8px; padding: 16px;
@@ -457,7 +457,7 @@
                 단순한 취향을 넘어 기질적 조화와 결혼 생활의 안정성을 예측하는<br>
                 <b>심층 매칭 시스템</b>으로 서로를 깊이 알아보세요.
             </p>
-            <button onclick="openModal()" class="mt-6 text-xs text-gray-400 underline hover:text-gray-600 transition-colors">
+            <button onclick="openModal('science-modal')" class="mt-6 text-xs text-gray-400 underline hover:text-gray-600 transition-colors">
                 이 매칭의 과학적 근거가 궁금하신가요?
             </button>
         </header>
@@ -531,7 +531,12 @@
                         
                         <!-- 관계의 파동 (색상 그라데이션 적용) -->
                         <div class="resonance-container">
-                            <span class="resonance-title">Relationship Resonance</span>
+                            <div class="flex justify-center items-center gap-2 mb-3">
+                                <span class="resonance-title mb-0">Relationship Resonance</span>
+                                <button onclick="openGuideModal('resonance')" class="text-xs text-gray-400 underline hover:text-gray-600">
+                                    [🌊 분석 원리 보기]
+                                </button>
+                            </div>
                             <div class="resonance-canvas-wrapper">
                                 <canvas id="resonanceWaveCanvas"></canvas>
                             </div>
@@ -614,7 +619,12 @@
             <div class="max-w-4xl mx-auto radar-box mb-12">
                 <div class="text-center mb-8">
                     <span class="text-xs font-bold text-indigo-500 tracking-widest uppercase mb-2 block">Personality Spectrum</span>
-                    <h3 class="text-2xl font-bold serif-font text-gray-800">성격 & 애착 8각형 시각화</h3>
+                    <div class="flex justify-center items-center gap-2">
+                        <h3 class="text-2xl font-bold serif-font text-gray-800">성격 & 애착 8각형 시각화</h3>
+                        <button onclick="openGuideModal('radar')" class="text-xs text-gray-400 underline hover:text-gray-600 self-end mb-1">
+                            [📊 그래프 해석 가이드]
+                        </button>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
@@ -688,13 +698,13 @@
         </div>
     </div>
 
-    <!-- 과학적 근거 모달 (상세 버전 복구) -->
+    <!-- 과학적 근거 모달 -->
     <div id="science-modal" class="fixed inset-0 bg-black/50 hidden z-50 flex justify-center items-center p-4">
-        <div class="bg-white rounded-2xl w-full max-w-2xl modal-content shadow-2xl transform transition-all scale-95 opacity-0" id="modal-panel">
+        <div class="bg-white rounded-2xl w-full max-w-2xl modal-content shadow-2xl transform transition-all scale-95 opacity-0" id="science-modal-panel">
             <div class="p-8">
                 <div class="flex justify-between items-start mb-6">
                     <h3 class="text-2xl font-bold serif-font text-gray-800">과학적 분석 근거 & 출처</h3>
-                    <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+                    <button onclick="closeModal('science-modal')" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
                 </div>
                 
                 <div class="space-y-6 text-sm leading-relaxed text-gray-600">
@@ -759,7 +769,133 @@
                 </div>
 
                 <div class="mt-8 text-center">
-                    <button onclick="closeModal()" class="bg-gray-800 text-white px-8 py-3 rounded-lg font-bold hover:bg-gray-900 transition-colors">
+                    <button onclick="closeModal('science-modal')" class="bg-gray-800 text-white px-8 py-3 rounded-lg font-bold hover:bg-gray-900 transition-colors">
+                        완벽하게 이해했습니다
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- [NEW] 결과 해석 가이드 모달 -->
+    <div id="analysis-guide-modal" class="fixed inset-0 bg-black/50 hidden z-50 flex justify-center items-center p-4">
+        <div class="bg-white rounded-2xl w-full max-w-2xl modal-content shadow-2xl transform transition-all scale-95 opacity-0" id="guide-modal-panel">
+            <div class="p-8">
+                <div class="flex justify-between items-start mb-6">
+                    <h3 class="text-2xl font-bold serif-font text-gray-800">결과 분석 원리 가이드</h3>
+                    <button onclick="closeModal('analysis-guide-modal')" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+                </div>
+                
+                <div class="space-y-10 text-sm leading-relaxed text-gray-600">
+                    <!-- 섹션 1: 파동 -->
+                    <div id="guide-resonance" class="scroll-mt-24">
+                        <h4 class="font-bold text-blue-600 mb-4 text-lg flex items-center border-b border-blue-100 pb-2">
+                            <span class="text-2xl mr-2">🌊</span> 관계의 파동 (Wave) 분석 원리
+                        </h4>
+                        <p class="mb-4 text-gray-700">두 분의 고유한 성향 에너지를 물리학의 <b>'파동 역학'</b>에 대입하여 시각화했습니다.</p>
+                        
+                        <div class="bg-blue-50 p-5 rounded-xl border border-blue-100 space-y-4">
+                            <!-- 1. 진폭 -->
+                            <div class="flex gap-3">
+                                <div class="min-w-[40px] text-2xl">〰️</div>
+                                <div>
+                                    <span class="font-bold text-blue-900 block mb-1 text-base">1. 진폭 (Amplitude): 에너지의 크기</span>
+                                    <p class="text-xs text-gray-600 leading-5">
+                                        파도의 높이는 두 분이 관계에 쏟는 <b>에너지의 총량</b>을 의미합니다.
+                                        <br>• <b>파동이 클 때:</b> 열정적이고 활동적이며, 함께 무언가를 도모하는 힘이 강합니다.
+                                        <br>• <b>파동이 잔잔할 때:</b> 서로에게 편안한 안식처가 되어주는 안정적인 관계입니다.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- 2. 주파수 -->
+                            <div class="flex gap-3">
+                                <div class="min-w-[40px] text-2xl">⏱️</div>
+                                <div>
+                                    <span class="font-bold text-blue-900 block mb-1 text-base">2. 주파수 (Frequency): 삶의 속도</span>
+                                    <p class="text-xs text-gray-600 leading-5">
+                                        파동의 간격은 두 분이 삶을 대하는 <b>속도와 리듬</b>을 나타냅니다.
+                                        <br>• <b>간격이 좁음:</b> 즉흥적이고 변화를 즐기며, 지루할 틈 없는 리듬을 가집니다.
+                                        <br>• <b>간격이 넓음:</b> 계획적이고 여유로우며, 신중하게 삶을 꾸려가는 리듬입니다.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- 3. 공명 (긍정적 수정됨) -->
+                            <div class="flex gap-3">
+                                <div class="min-w-[40px] text-2xl">💞</div>
+                                <div>
+                                    <span class="font-bold text-blue-900 block mb-1 text-base">3. 공명 (Resonance): 조화의 방식</span>
+                                    <p class="text-xs text-gray-600 leading-5">
+                                        두 파동이 만나는 모습은 두 분의 <b>화학 작용</b>을 보여줍니다.
+                                        <br>• <b>선이 하나로 겹칠 때:</b> <span class="text-blue-700 font-bold">"동기화(Sync)"</span> - 말하지 않아도 통하는 깊은 일체감을 느낍니다.
+                                        <br>• <b>선이 엇갈려 보일 때:</b> <span class="text-amber-600 font-bold">"상호보완(Harmony)"</span> - 서로 다른 음이 만나 화음을 이루듯, 나의 부족함을 상대방이 완벽하게 채워주는 시너지를 냅니다.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- 4. 색상 (상세 설명 추가) -->
+                            <div class="flex gap-3 border-t border-blue-200 pt-4 mt-2">
+                                <div class="min-w-[40px] text-2xl">🎨</div>
+                                <div>
+                                    <span class="font-bold text-blue-900 block mb-1 text-base">4. 색상 (Aura Color): 핵심 성향</span>
+                                    <p class="text-xs text-gray-600 mb-2">파동의 색깔은 각자의 성격 중 가장 돋보이는 강점을 상징합니다.</p>
+                                    <div class="grid grid-cols-2 gap-2 text-[11px]">
+                                        <span class="flex items-center"><span class="w-3 h-3 rounded-full bg-indigo-500 mr-1"></span><b>보라/남색:</b> 통찰력, 신뢰, 깊은 유대</span>
+                                        <span class="flex items-center"><span class="w-3 h-3 rounded-full bg-blue-500 mr-1"></span><b>파란색:</b> 성실함, 책임감, 이성적 판단</span>
+                                        <span class="flex items-center"><span class="w-3 h-3 rounded-full bg-orange-500 mr-1"></span><b>주황/빨강:</b> 열정, 에너지, 리더십</span>
+                                        <span class="flex items-center"><span class="w-3 h-3 rounded-full bg-emerald-500 mr-1"></span><b>초록/청록:</b> 배려, 평화, 정서적 안정</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 섹션 2: 레이더 -->
+                    <div id="guide-radar" class="pt-6 border-t border-gray-100 scroll-mt-24">
+                        <h4 class="font-bold text-purple-600 mb-4 text-lg flex items-center">
+                            <span class="text-2xl mr-2">📊</span> 8각형 스펙트럼 (Radar) 해석법
+                        </h4>
+                        <p class="mb-4 text-gray-700">Big 5 성격 이론과 애착 이론을 결합하여 8가지 축으로 세분화한 <b>성격 지도</b>입니다.</p>
+                        
+                        <div class="bg-purple-50 p-5 rounded-xl border border-purple-100 space-y-4">
+                            <div>
+                                <span class="font-bold text-purple-900 block mb-2 text-base">✔️ 그래프 모양의 의미</span>
+                                <ul class="list-none text-xs text-gray-600 space-y-2">
+                                    <li class="flex items-start">
+                                        <span class="text-purple-500 mr-2">●</span>
+                                        <span><b>넓은 면적:</b> 해당 성향 에너지가 풍부함을 의미합니다.</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-purple-500 mr-2">●</span>
+                                        <span><b>겹치는 영역 (공통분모):</b> 두 분이 편안하게 소통하고 공감할 수 있는 <b>'안전지대'</b>입니다. 이 영역이 넓을수록 가치관 충돌 없이 평온합니다.</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-purple-500 mr-2">●</span>
+                                        <span><b>튀어나온 영역 (나만의 강점):</b> 상대방에게는 없지만 나에게만 있는 특별한 매력입니다. 서로 이 부분이 다를 때 <b>'퍼즐 조각'</b>처럼 완벽하게 맞물리는 상호보완 효과가 발생합니다.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-white p-3 rounded-lg border border-purple-100 mt-2">
+                                <span class="font-bold text-purple-900 block mb-2 text-xs">💡 8가지 축 상세 정의</span>
+                                <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-[11px] text-gray-600">
+                                    <span>✨ <b>개방성:</b> 호기심, 창의성, 새로운 경험</span>
+                                    <span>📅 <b>성실성:</b> 계획성, 책임감, 목표 달성</span>
+                                    <span>🎉 <b>외향성:</b> 사교성, 활동 에너지, 활력</span>
+                                    <span>🤝 <b>우호성:</b> 타인 배려, 공감 능력, 협조</span>
+                                    <span>🧘 <b>정서안정:</b> 스트레스 관리, 평정심 유지</span>
+                                    <span>🛡️ <b>애착안정:</b> 관계에 대한 신뢰와 편안함</span>
+                                    <span>❤️ <b>애착불안:</b> 사랑과 관심을 확인받고 싶음</span>
+                                    <span>🌵 <b>애착회피:</b> 독립적인 시간과 공간 중시</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 text-center">
+                    <button onclick="closeModal('analysis-guide-modal')" class="bg-gray-800 text-white px-8 py-3 rounded-lg font-bold hover:bg-gray-900 transition-colors shadow-md">
                         완벽하게 이해했습니다
                     </button>
                 </div>
@@ -1616,9 +1752,28 @@
             });
         }
 
-        function openModal() { document.getElementById('science-modal').classList.remove('hidden'); setTimeout(() => { document.getElementById('modal-panel').classList.remove('scale-95', 'opacity-0'); document.getElementById('modal-panel').classList.add('scale-100', 'opacity-100'); }, 10); }
-        function closeModal() { document.getElementById('modal-panel').classList.add('scale-95', 'opacity-0'); setTimeout(() => { document.getElementById('science-modal').classList.add('hidden'); }, 300); }
+        function openModal(modalId) { 
+            document.getElementById(modalId).classList.remove('hidden'); 
+            const panel = document.getElementById(modalId === 'science-modal' ? 'science-modal-panel' : 'guide-modal-panel');
+            setTimeout(() => { 
+                panel.classList.remove('scale-95', 'opacity-0'); 
+                panel.classList.add('scale-100', 'opacity-100'); 
+            }, 10); 
+        }
+        function closeModal(modalId) { 
+            const panel = document.getElementById(modalId === 'science-modal' ? 'science-modal-panel' : 'guide-modal-panel');
+            panel.classList.add('scale-95', 'opacity-0'); 
+            setTimeout(() => { document.getElementById(modalId).classList.add('hidden'); }, 300); 
+        }
         
+        function openGuideModal(section) {
+            openModal('analysis-guide-modal');
+            setTimeout(() => {
+                const target = document.getElementById(section === 'resonance' ? 'guide-resonance' : 'guide-radar');
+                if(target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        }
+
         const retryBtn = document.getElementById('retry-btn');
         if (retryBtn) retryBtn.addEventListener('click', () => location.reload());
         
